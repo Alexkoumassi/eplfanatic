@@ -188,3 +188,17 @@ select {
 .loading, .error { color: var(--muted); padding: 20px 0; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Guides */
+.guide-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.guide-list a { display: grid; gap: 4px; height: 100%; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .15s; }
+.guide-list a:hover { border-color: var(--accent); }
+.gl-title { font-family: var(--display); font-size: 1.25rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.gl-desc { color: var(--muted); font-size: .92rem; }
+.home-guides { margin-top: 36px; display: grid; gap: 14px; }
+.prose ul { padding-left: 1.2em; display: grid; gap: 6px; }
+.prose .tbl-wrap { margin: 10px 0 6px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.prose .tbl td, .prose .tbl th { padding-inline: 12px; }
+.updated { color: var(--muted); font-size: .88rem; margin-top: 28px; }
+.more-guides { margin-top: 36px; display: grid; gap: 14px; }

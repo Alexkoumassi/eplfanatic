@@ -6,6 +6,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { GUIDES, GUIDES_UPDATED } from './guides.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://eplfanatic.com';
@@ -20,6 +21,7 @@ const NAV = [
   ['fixture-difficulty.html', 'fixtures', 'Fixtures'],
   ['captain-picks.html', 'captains', 'Captain picks'],
   ['injuries.html', 'injuries', 'Injuries'],
+  ['guides.html', 'guides', 'Guides'],
 ];
 
 const PAGES = [
@@ -101,6 +103,32 @@ const PAGES = [
   },
 ];
 
+
+// Guide pages and the guides index
+const guideList = () => `<ul class="guide-list">${GUIDES.map(g =>
+  `<li><a href="${g.file}"><span class="gl-title">${g.h1}</span><span class="gl-desc">${g.desc}</span></a></li>`).join('')}</ul>`;
+PAGES.push({
+  file: 'guides.html', page: 'guides',
+  title: 'FPL Guides: Chips, Prices, Scoring, Captains | EPL Fanatic',
+  desc: 'Plain-English Fantasy Premier League guides for 2026/27: chips, price changes, scoring, blank and double gameweeks, captaincy and transfers.',
+  eyebrow: 'Guides', h1: 'FPL guides',
+  lede: 'Short, plain-English guides to the rules and decisions that matter most in Fantasy Premier League.',
+  body: guideList(),
+});
+for (const g of GUIDES) {
+  const others = GUIDES.filter(o => o !== g);
+  PAGES.push({
+    file: g.file, page: 'guide', nav: 'guides', title: g.title, desc: g.desc,
+    eyebrow: 'FPL guide', h1: g.h1, lede: g.lede,
+    body: `<article class="prose">${g.body}
+<p class="updated">Last updated ${GUIDES_UPDATED}.</p></article>
+<aside class="more-guides"><h2>More guides</h2><ul class="guide-list">${others.map(o =>
+  `<li><a href="${o.file}"><span class="gl-title">${o.h1}</span></a></li>`).join('')}</ul></aside>`,
+  });
+}
+// Home page: add the guides list under the tools
+PAGES[0].body += `\n<section class="home-guides"><h2>Learn the game</h2>${guideList()}</section>`;
+
 const TOOL_PAGES = new Set(['prices', 'fixtures', 'captains', 'injuries', 'home']);
 
 function header(current) {
@@ -158,7 +186,7 @@ function fullPage(p) {
 <link rel="stylesheet" href="assets/style.css">${ads}
 </head>
 <body data-page="${p.page}">
-${header(p.page)}
+${header(p.nav || p.page)}
 <main class="wrap">
 ${mainContent(p).replace('<h2>Contact</h2>', '<h2 id="contact">Contact</h2>')}
 </main>
@@ -186,6 +214,7 @@ async function buildPreview(out) {
   const js = await readFile(path.join(ROOT, 'assets', 'app.js'), 'utf8');
   const data = await readFile(path.join(ROOT, 'data', 'fpl.json'), 'utf8');
   const views = PAGES.filter(p => p.page !== 'privacy');
+  const vid = p => p.file.replace('.html', '');
   const html = `<title>EPL Fanatic Preview</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="${FONTS}">
@@ -194,12 +223,12 @@ ${css}
 .view[hidden] { display: none !important; }
 </style>
 <header class="site-head"><div class="wrap head-row">
-  <a class="brand" href="#" data-go="home">EPL<span>Fanatic</span></a>
-  <nav class="nav" aria-label="Main">${NAV.map(([, id, label]) => `<button type="button" id="nav-${id}" data-go="${id}"${id === 'home' ? ' aria-current="page"' : ''}>${label}</button>`).join('')}</nav>
+  <a class="brand" href="#" data-go="index">EPL<span>Fanatic</span></a>
+  <nav class="nav" aria-label="Main">${NAV.map(([f, id, label]) => `<button type="button" id="nav-${id}" data-go="${f.replace('.html', '')}"${id === 'home' ? ' aria-current="page"' : ''}>${label}</button>`).join('')}</nav>
 </div></header>
 <div class="band"><div class="wrap gw-band"></div></div>
 <main class="wrap">
-${views.map(p => `<section class="view" id="view-${p.page}"${p.page === 'home' ? '' : ' hidden'}>
+${views.map(p => `<section class="view" id="view-${vid(p)}"${p.page === 'home' ? '' : ' hidden'}>
 ${pageHead(p)}<div class="tool-host" data-tool="${p.page}">${p.page === 'home' ? p.body : p.body || ''}</div>
 </section>`).join('\n')}
 </main>
@@ -210,7 +239,7 @@ ${js}
 </script>
 <script>
 (function () {
-  var fileToId = ${JSON.stringify(Object.fromEntries(NAV.map(([f, id]) => [f, id]).concat([['about.html', 'about'], ['privacy.html', 'about']])))};
+  var fileToId = ${JSON.stringify(Object.fromEntries(views.map(p => [p.file, vid(p)]).concat([['privacy.html', 'about']])))};
   function show(id) {
     document.querySelectorAll('.view').forEach(function (v) { v.hidden = v.id !== 'view-' + id; });
     document.querySelectorAll('.nav [data-go]').forEach(function (b) {
