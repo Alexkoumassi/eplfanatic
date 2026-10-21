@@ -13,7 +13,7 @@ const SITE = 'https://eplfanatic.com';
 const CONTACT = 'hello@eplfanatic.com';
 const FONTS = 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400;600;700&display=swap';
 // Paste your AdSense publisher ID here once approved, e.g. 'ca-pub-1234567890123456'
-const ADSENSE_ID = '';
+const ADSENSE_ID = 'ca-pub-1063483534026275';
 
 const NAV = [
   ['index.html', 'home', 'Home'],
@@ -165,7 +165,7 @@ function mainContent(p) {
 function fullPage(p) {
   const canonical = `${SITE}/${p.file === 'index.html' ? '' : p.file}`;
   const ads = ADSENSE_ID
-    ? `\n<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}" crossorigin="anonymous"></script>` : '';
+    ? `\n<meta name="google-adsense-account" content="${ADSENSE_ID}">\n<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}" crossorigin="anonymous"></script>` : '';
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -204,6 +204,7 @@ async function buildSite() {
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
   await writeFile(path.join(ROOT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);
   await writeFile(path.join(ROOT, 'CNAME'), 'eplfanatic.com\n');
+  if (ADSENSE_ID) await writeFile(path.join(ROOT, 'ads.txt'), `google.com, ${ADSENSE_ID.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n`);
   await writeFile(path.join(ROOT, '.nojekyll'), '');
   console.log(`Built ${PAGES.length} pages.`);
 }
