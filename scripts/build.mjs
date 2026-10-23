@@ -129,7 +129,97 @@ for (const g of GUIDES) {
 // Home page: add the guides list under the tools
 PAGES[0].body += `\n<section class="home-guides"><h2>Learn the game</h2>${guideList()}</section>`;
 
+
+// ---- Static snapshots so every tool page has real content in its HTML ----
+// The interactive version from assets/app.js replaces these once the page loads.
+let DATA = null;
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const money = n => `£${Number(n).toFixed(1)}m`;
+const pct = n => `${Number(n).toFixed(1)}%`;
+const signed = n => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n).toLocaleString('en-GB');
+const STATUS = { d: 'Doubtful', i: 'Injured', s: 'Suspended', u: 'Unavailable', n: 'Not eligible' };
+const player = p => `<div class="pc"><span class="pn">${esc(p.name)}</span><span class="pm">${esc(p.team)} · ${esc(p.pos)}</span></div>`;
+const opps = o => o && o.length ? `<span class="opp">${o.map(x => `<span class="f${x.diff}">${esc(x.opp)} (${x.home ? 'H' : 'A'})</span>`).join('')}</span>` : 'No game';
+
+function snapshot(page) {
+  const d = DATA;
+  if (!d) return '<p class="loading">Loading the latest numbers…</p>';
+  const gw = d.gameweek ? esc(d.gameweek.name) : 'the next gameweek';
+  if (page === 'prices') {
+    const t = (list, dir) => `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Player</th><th class="r">Price</th><th class="r">Net transfers</th><th class="r">Owned</th></tr></thead><tbody>${
+      list.slice(0, 15).map(p => `<tr><td>${player(p)}</td><td class="r">${money(p.price)}</td><td class="r"><span class="num-${dir}">${signed(p.net)}</span></td><td class="r">${pct(p.own)}</td></tr>`).join('')}</tbody></table></div>`;
+    return `<div class="two-col"><section class="panel"><h2 class="up-h">Rising</h2><p class="panel-sub">Most net transfers in for ${gw}.</p>${t(d.prices.risers, 'up')}</section>
+<section class="panel"><h2 class="down-h">Falling</h2><p class="panel-sub">Most net transfers out for ${gw}.</p>${t(d.prices.fallers, 'down')}</section></div>`;
+  }
+  if (page === 'fixtures') {
+    const ease = t => t.cells.reduce((s, c) => s + c.reduce((a, o) => a + 6 - o.diff, 0), 0);
+    const teams = d.fdr.teams.slice().sort((a, b) => ease(b) - ease(a));
+    return `<section class="panel"><div class="tbl-wrap"><table class="fdr-tbl"><thead><tr><th style="text-align:left">Team</th>${d.fdr.gws.map(g => `<th>GW${g}</th>`).join('')}<th>Run</th></tr></thead><tbody>${
+      teams.map(t => `<tr><td class="team">${esc(t.short)}<small>${esc(t.name)}</small></td>${t.cells.map(c => c.length
+        ? `<td><div class="fx">${c.map(o => `<span class="f${o.diff}">${esc(o.opp)}<small>${o.home ? 'H' : 'A'}</small></span>`).join('')}</div></td>`
+        : '<td class="blank">–</td>').join('')}<td class="ease">${ease(t)}</td></tr>`).join('')}</tbody></table></div></section>`;
+  }
+  if (page === 'captains') {
+    return `<section class="panel"><h2>Captain shortlist for ${gw}</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Player</th><th>Next</th><th class="r">Exp. pts</th><th class="r">Form</th><th class="r">Owned</th><th class="r">Score</th></tr></thead><tbody>${
+      d.captains.map((p, i) => `<tr><td>${i + 1}</td><td>${player(p)}</td><td>${opps(p.opp)}</td><td class="r">${p.ep.toFixed(1)}</td><td class="r">${p.form.toFixed(1)}</td><td class="r">${pct(p.own)}</td><td class="r"><b>${p.score.toFixed(1)}</b></td></tr>`).join('')}</tbody></table></div></section>`;
+  }
+  if (page === 'injuries') {
+    return `<section class="panel"><div class="flag-list">${d.flags.slice(0, 40).map(p => {
+      let label = STATUS[p.status] || 'Flagged';
+      if (p.status === 'd' && p.chance != null) label += ` · ${p.chance}%`;
+      return `<div class="flag"><div>${player(p)}<span class="pm">${pct(p.own)} owned · ${money(p.price)}</span></div><span class="pill st-${esc(p.status)}">${esc(label)}</span>${p.news ? `<p class="flag-news" style="margin:0">${esc(p.news)}</p>` : ''}</div>`;
+    }).join('')}</div></section>`;
+  }
+  return '';
+}
+
+// Plain-English explanation under each tool
+const TOOL_ABOUT = {
+  prices: `<h2>How to use the price change watch</h2>
+<p>Fantasy Premier League prices move overnight, by £0.1m at a time, depending on how many managers buy or sell a player compared with how many already own him. The <strong>Rising</strong> table lists the players with the most net transfers in this gameweek. They are the most likely to go up in price. The <strong>Falling</strong> table lists the players being sold the most, who are the most likely to drop.</p>
+<p>Ownership matters as much as the raw number. 100,000 transfers in for a player owned by 50% of managers is less pressure than 50,000 for a player owned by 3%. Use the position filter to compare players you're actually choosing between.</p>
+<h2>When this helps</h2>
+<ul><li>If you already plan to buy a rising player this week, buying before tonight's change saves you £0.1m.</li>
+<li>If a player you plan to sell is falling, selling before the drop keeps your budget intact.</li>
+<li>Don't make a transfer only to chase a price rise. Points matter more than £0.1m.</li></ul>
+<p>Read <a href="how-fpl-price-changes-work.html">how FPL price changes work</a> for the full rules, including why you only keep half of any price rise when you sell.</p>`,
+  fixtures: `<h2>How to read the fixture grid</h2>
+<p>Each row is a Premier League team and each column is a gameweek. Every cell shows the opponent, H for home or A for away, and is coloured by FPL's own difficulty rating from 1 (dark green, easiest) to 5 (dark red, hardest). A shaded cell with a dash means the team has no match that week, and a split cell means two matches.</p>
+<p>The <strong>Run</strong> column adds up how kind the whole run is: an easiest-rated fixture scores 5 and a hardest-rated one scores 1. Teams with more matches score higher, so double gameweeks push teams up the list.</p>
+<h2>How to use it</h2>
+<ul><li>Look for defenders and goalkeepers from teams with a long green run. Easy fixtures mean more clean sheets.</li>
+<li>Look for attackers facing several weak defences in a row.</li>
+<li>Plan transfers two or three weeks ahead, so you're bringing players in just as their good run starts, not halfway through it.</li></ul>
+<p>See <a href="blank-and-double-gameweeks.html">blank and double gameweeks</a> for how to plan around weeks when teams play twice or not at all.</p>`,
+  captains: `<h2>How the captain score works</h2>
+<p>The score starts from FPL's own expected points for each player's next match. It adds a quarter of the player's recent form, then adjusts for the opponent: easier fixtures add points and harder fixtures take them away. Players flagged as less than 75% likely to play are left out, because a captain who doesn't play scores nothing.</p>
+<p>The table also shows ownership. A captain owned by most managers protects your rank if he scores. A less-owned captain can gain you ground if he outscores the popular pick, but it's a bigger gamble.</p>
+<h2>Before you lock it in</h2>
+<ul><li>Check the <a href="injuries.html">injury list</a> again close to the deadline.</li>
+<li>Pick a vice-captain who is very likely to start, so the armband isn't wasted if your captain misses out.</li>
+<li>In a double gameweek, a good player with two matches usually beats a great player with one.</li></ul>
+<p>Our guide on <a href="how-to-pick-fpl-captain.html">how to pick your FPL captain</a> walks through the full checklist.</p>`,
+  injuries: `<h2>What the flags mean</h2>
+<ul><li><strong>Doubtful</strong> (yellow): the player has a knock or illness. The percentage is FPL's estimate of his chance of playing in the next round: 75%, 50% or 25%.</li>
+<li><strong>Injured</strong>: the player is not expected to play in the next round.</li>
+<li><strong>Suspended</strong>: the player is banned, usually after a red card or too many yellow cards.</li>
+<li><strong>Unavailable</strong>: the player has left on loan, been transferred abroad, or is otherwise out of the squad.</li></ul>
+<p>Players are sorted by ownership, so the news that affects the most FPL teams comes first. The list comes from the official game and refreshes several times a day, but managers' press conferences often give fresher news in the days before a deadline.</p>
+<h2>What to do with a flagged player</h2>
+<ul><li>A short-term knock in a good player is usually worth waiting out, especially if you don't have a free transfer.</li>
+<li>A long-term injury is worth a transfer, because a player who scores zero for weeks costs you more than a points hit.</li>
+<li>Make sure your bench has players who are likely to play, so automatic substitutions can cover a late absence.</li></ul>
+<p>Read <a href="fpl-free-transfers-and-hits.html">free transfers and points hits</a> before deciding.</p>`,
+};
+
 const TOOL_PAGES = new Set(['prices', 'fixtures', 'captains', 'injuries', 'home']);
+
+function bandText() {
+  if (!DATA || !DATA.gameweek) return '<span><b>FPL Tools</b> Updated several times a day</span>';
+  const d = new Date(DATA.gameweek.deadline);
+  const when = d.toLocaleString('en-GB', { timeZone: 'Europe/London', weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  return `<span><b>${esc(DATA.gameweek.name)}</b> deadline ${esc(when)} UK time</span>`;
+}
 
 function header(current) {
   return `<header class="site-head"><div class="wrap head-row">
@@ -137,7 +227,7 @@ function header(current) {
   <nav class="nav" aria-label="Main">${NAV.map(([href, id, label]) =>
     `<a href="${href}"${id === current ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>
 </div></header>
-<div class="band"><div class="wrap gw-band"><span><b>FPL Tools</b> Loading the latest gameweek…</span></div></div>`;
+<div class="band"><div class="wrap gw-band">${bandText()}</div></div>`;
 }
 
 function footer() {
@@ -158,7 +248,7 @@ function pageHead(p) {
 
 function mainContent(p) {
   if (p.page === 'home') return `${pageHead(p)}<div id="tool">${p.body}</div>`;
-  if (TOOL_PAGES.has(p.page)) return `${pageHead(p)}<div class="ad-slot"></div><div id="tool"><p class="loading">Loading the latest numbers…</p></div><div class="ad-slot"></div>`;
+  if (TOOL_PAGES.has(p.page)) return `${pageHead(p)}<div class="ad-slot"></div><div id="tool">${snapshot(p.page)}</div><div class="ad-slot"></div>${TOOL_ABOUT[p.page] ? `<section class="prose tool-about">${TOOL_ABOUT[p.page]}</section>` : ''}`;
   return `${pageHead(p)}${p.body}`;
 }
 
@@ -198,6 +288,7 @@ ${footer()}
 }
 
 async function buildSite() {
+  try { DATA = JSON.parse(await readFile(path.join(ROOT, 'data', 'fpl.json'), 'utf8')); } catch { DATA = null; }
   for (const p of PAGES) await writeFile(path.join(ROOT, p.file), fullPage(p));
   const urls = PAGES.map(p => `  <url><loc>${SITE}/${p.file === 'index.html' ? '' : p.file}</loc></url>`).join('\n');
   await writeFile(path.join(ROOT, 'sitemap.xml'),

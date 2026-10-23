@@ -210,4 +210,193 @@ export const GUIDES = [
 <p>When you play a Wildcard or Free Hit, all transfers that week are free and cost no points. If you need five or more changes, a chip is usually better than a string of hits. See our <a href="fpl-chips-explained.html">chips guide</a>.</p>
 <p>Before you transfer, check <a href="price-changes.html">price changes</a> so you buy before a rise, and the <a href="injuries.html">injury list</a> so you don't buy a player who's doubtful.</p>`,
   },
+  {
+    file: 'fpl-beginners-guide.html',
+    title: 'FPL Beginner\'s Guide: How Fantasy Premier League Works | EPL Fanatic',
+    desc: 'New to Fantasy Premier League? How the squad, budget, transfers, captain and deadlines work, explained step by step.',
+    h1: 'FPL beginner\'s guide',
+    lede: 'Fantasy Premier League is free to play and takes a few minutes a week once you know the basics. This guide covers everything you need for your first gameweek.',
+    body: `
+<h2>The aim of the game</h2>
+<p>You pick a squad of real Premier League players. Each week, your players score points based on what they do in their real matches: playing, scoring, assisting, keeping clean sheets and more. Your total over the season decides your rank against millions of other managers and against your friends in private leagues.</p>
+
+<h2>Building your squad</h2>
+<ul>
+  <li>You pick <strong>15 players</strong>: 2 goalkeepers, 5 defenders, 5 midfielders and 3 forwards.</li>
+  <li>You have a budget of <strong>£100.0m</strong>. Each player has a price set by the game.</li>
+  <li>You can pick at most <strong>3 players from any one club</strong>.</li>
+</ul>
+
+<h2>Your starting 11</h2>
+<p>Each gameweek, 11 of your 15 players start and 4 sit on the bench. Only the starters score, unless you use the Bench Boost chip. Your starting 11 must have 1 goalkeeper, at least 3 defenders, at least 2 midfielders and at least 1 forward, so formations such as 3-4-3, 4-4-2 and 3-5-2 are all allowed.</p>
+<p>If a starter doesn't play at all, the game automatically brings on a bench player in the order you set. See <a href="fpl-bench-and-auto-subs.html">bench and auto-subs</a> for how that works.</p>
+
+<h2>Captain and vice-captain</h2>
+<p>Pick one starter as captain. Their points count double. Your vice-captain takes over the double points if your captain doesn't play. This is the biggest weekly decision, so see <a href="how-to-pick-fpl-captain.html">how to pick your captain</a>.</p>
+
+<h2>Transfers</h2>
+<p>You get one free transfer each gameweek to swap a player out. Unused free transfers roll over, up to five. Extra transfers cost 4 points each. Read <a href="fpl-free-transfers-and-hits.html">free transfers and points hits</a> before making several changes.</p>
+
+<h2>Chips</h2>
+<p>Chips are one-off boosts: Wildcard, Free Hit, Bench Boost and Triple Captain. This season you get two of each, one set per half of the season. See <a href="fpl-chips-explained.html">FPL chips explained</a>.</p>
+
+<h2>Deadlines</h2>
+<p>Every change must be made before the gameweek deadline, which is usually 90 minutes before the first match of that gameweek. Our deadline bar at the top of every page shows the next one. See <a href="fpl-gameweek-deadlines.html">gameweek deadlines</a> for what locks and when.</p>
+
+<h2>Your first-week checklist</h2>
+<ul>
+  <li>Spend most of your budget on a few reliable attackers and fill the rest with cheap players who start every week.</li>
+  <li>Check the <a href="injuries.html">injury list</a> so you don't buy someone who's out.</li>
+  <li>Use the <a href="fixture-difficulty.html">fixture grid</a> to favour teams with easier upcoming matches.</li>
+  <li>Join a private league with friends. It makes every week more fun.</li>
+</ul>`,
+  },
+  {
+    file: 'build-a-balanced-fpl-squad.html',
+    title: 'How to Build a Balanced FPL Squad on £100m | EPL Fanatic',
+    desc: 'How to split your £100m Fantasy Premier League budget between premiums, mid-priced players and cheap bench fodder.',
+    h1: 'How to build a balanced FPL squad',
+    lede: 'The best squads don\'t spread money evenly. They put it where points come from and save it where they don\'t.',
+    body: `
+<h2>Spend where the points are</h2>
+<p>Most of the big hauls in FPL come from attacking players: goal-scoring midfielders and forwards who take penalties and play every minute. That's why most strong squads put a large share of the budget into two or three premium attackers.</p>
+<p>Goalkeepers and the fourth or fifth defender rarely decide a gameweek. Many managers spend as little as possible there and use the savings up front.</p>
+
+<h2>The three price bands</h2>
+<ul>
+  <li><strong>Premiums:</strong> the most expensive players in the game. Pick the ones who start every week, take set pieces and have good fixtures. These are your usual captains.</li>
+  <li><strong>Mid-priced players:</strong> the engine of a good squad. Look for players who have moved into a more attacking role, or who play for a team on an easy run.</li>
+  <li><strong>Budget enablers:</strong> the cheapest players who still start regularly. A cheap defender who plays 90 minutes on a solid team is worth more than an expensive one who is rotated.</li>
+</ul>
+
+<h2>Bench: cheap but playing</h2>
+<p>Your bench only scores when a starter misses out or you play Bench Boost. That makes it a good place to save money. Choose cheap players who are likely to start, so auto-substitutions actually give you points. A bench full of players who never play is money and points wasted.</p>
+
+<h2>Don't forget defensive points</h2>
+<p>Defenders and defensive midfielders can now earn 2 points for defensive contributions (10 or more clearances, blocks, interceptions and tackles for defenders, 12 or more including recoveries for midfielders and forwards). Busy centre-backs on mid-table teams can be good value even without many clean sheets. See <a href="fpl-points-scoring-explained.html">how FPL scoring works</a>.</p>
+
+<h2>Keep a little flexibility</h2>
+<ul>
+  <li>Leave a small amount in the bank, or pick players you could easily swap for a premium later.</li>
+  <li>Avoid three players from one team unless they're all nailed starters with good fixtures. It limits your transfers later.</li>
+  <li>Balance teams by fixtures. Use the <a href="fixture-difficulty.html">fixture grid</a> so your players don't all have hard matches in the same week.</li>
+</ul>`,
+  },
+  {
+    file: 'fpl-bench-and-auto-subs.html',
+    title: 'FPL Bench Order and Automatic Substitutions Explained | EPL Fanatic',
+    desc: 'How Fantasy Premier League automatic substitutions work, why bench order matters, and how to set your bench each gameweek.',
+    h1: 'Bench order and automatic substitutions',
+    lede: 'When one of your starters doesn\'t play, the game can bring on a bench player for you. Getting the order right can quietly win you points every few weeks.',
+    body: `
+<h2>When an auto-sub happens</h2>
+<p>If a player in your starting 11 plays <strong>0 minutes</strong> in the gameweek, the game replaces him with a player from your bench who did play. This happens automatically after the gameweek's matches. A starter who plays even one minute stays in your team, even if he scores very little.</p>
+
+<h2>Bench order matters</h2>
+<p>Your bench has a substitute goalkeeper plus three outfield players in order: first, second and third. The game tries them in that order and brings on the first one who played, as long as your formation stays valid.</p>
+<ul>
+  <li>A goalkeeper can only be replaced by your substitute goalkeeper.</li>
+  <li>Your team must still have at least 3 defenders, 2 midfielders and 1 forward after the change. If bringing on your first sub would break that, the game skips to the next one who keeps the formation valid.</li>
+</ul>
+
+<h2>Captain and vice-captain</h2>
+<p>If your captain plays 0 minutes, your vice-captain's points are doubled instead. The captain himself is also replaced by a bench player like any other starter. This is why your vice-captain should be someone who is very likely to start.</p>
+
+<h2>How to set your bench</h2>
+<ul>
+  <li>Put the bench player most likely to play and score first.</li>
+  <li>If one of your starters is a doubt, put a player from the same position first on the bench, so the formation rules don't get in the way.</li>
+  <li>Check the <a href="injuries.html">injury list</a> and team news before the deadline, and move clearly injured players to the bench yourself.</li>
+</ul>
+
+<h2>Bench Boost</h2>
+<p>When you play the Bench Boost chip, all four bench players score that week, so bench order doesn't matter. See <a href="fpl-chips-explained.html">FPL chips explained</a> for when to use it.</p>`,
+  },
+  {
+    file: 'fpl-gameweek-deadlines.html',
+    title: 'FPL Gameweek Deadlines: When They Are and What Locks | EPL Fanatic',
+    desc: 'When the Fantasy Premier League deadline is each gameweek, what you can and can\'t change after it, and when points are finalised.',
+    h1: 'FPL gameweek deadlines',
+    lede: 'Miss the deadline and your changes wait until next week. Here\'s exactly what the deadline locks and how a gameweek runs from start to finish.',
+    body: `
+<h2>When the deadline is</h2>
+<p>The deadline is usually <strong>90 minutes before the first match of the gameweek</strong> kicks off. When the first match is on a Saturday lunchtime, the deadline is late Saturday morning UK time. When a gameweek starts on a Friday night or midweek, the deadline moves earlier. Always check: the bar at the top of every EPL Fanatic page shows the next deadline in your own time zone.</p>
+
+<h2>What the deadline locks</h2>
+<ul>
+  <li>Transfers in and out</li>
+  <li>Your starting 11 and bench order</li>
+  <li>Your captain and vice-captain</li>
+  <li>Any chip you want to play that week</li>
+</ul>
+<p>After the deadline, any transfers you make count for the following gameweek.</p>
+
+<h2>During the gameweek</h2>
+<p>Points update live as matches are played. This season, projected bonus points, mini-league tables and your overall rank update live from about 20 minutes into each match. Automatic substitutions are applied once the gameweek's matches are finished.</p>
+
+<h2>When points are final</h2>
+<p>Scores are confirmed at 9am UK time on the day after the gameweek's last match. Small changes to assists or bonus points can happen until then.</p>
+
+<h2>A simple deadline routine</h2>
+<ul>
+  <li><strong>Two or three days before:</strong> check the <a href="fixture-difficulty.html">fixture grid</a> and plan any transfer.</li>
+  <li><strong>The night before:</strong> check <a href="price-changes.html">price changes</a>, since buying before a rise saves money.</li>
+  <li><strong>The day of:</strong> check the <a href="injuries.html">injury list</a> and press conference news, confirm your <a href="captain-picks.html">captain</a>, and set your bench.</li>
+</ul>`,
+  },
+  {
+    file: 'fpl-mini-league-strategy.html',
+    title: 'How to Win Your FPL Mini-League | EPL Fanatic',
+    desc: 'Practical Fantasy Premier League mini-league strategy: when to follow the crowd, when to pick differentials, and how to catch a leader.',
+    h1: 'How to win your FPL mini-league',
+    lede: 'Beating your friends is a different game from chasing a high overall rank. What matters is how your team differs from theirs.',
+    body: `
+<h2>Points only matter when they're different</h2>
+<p>If you and your rival both own the same player, his goals don't change the gap between you. Only players one of you owns and the other doesn't, and different captain choices, move you up or down the table. Look at your rivals' teams in the game and notice which of your players they don't have.</p>
+
+<h2>Leading? Copy the big picks</h2>
+<p>If you're ahead, the safest plan is to own the players your rivals rely on, especially their captains. That way, their big weeks don't cost you ground. Make fewer risky transfers and avoid points hits unless a player is injured long-term.</p>
+
+<h2>Chasing? Pick your moments</h2>
+<p>If you're behind, you need players your rivals don't have, called differentials, to score well. Good ways to find them:</p>
+<ul>
+  <li>Players with a strong run of fixtures but low ownership. The <a href="fixture-difficulty.html">fixture grid</a> helps you spot them early.</li>
+  <li>A different captain from the leader, in a week when your pick has a much easier match.</li>
+  <li>Timing chips differently. If your rivals have already used their Bench Boost or Triple Captain, using yours in a big double gameweek can swing the table.</li>
+</ul>
+
+<h2>Don't overreact</h2>
+<p>One bad week isn't a trend. Selling players after one blank and buying last week's top scorer usually costs points over the season. Keep a plan for the next few gameweeks and adjust it only for injuries, suspensions and fixture changes.</p>
+
+<h2>Watch the chip deadline</h2>
+<p>This season, first-half chips expire at the Gameweek 19 deadline. Check which chips your rivals have left and plan yours so you don't waste any. See <a href="fpl-chips-explained.html">FPL chips explained</a>.</p>`,
+  },
+  {
+    file: 'expected-goals-xg-for-fpl.html',
+    title: 'Expected Goals (xG) Explained for FPL Managers | EPL Fanatic',
+    desc: 'What expected goals (xG) and expected assists (xA) mean, and how Fantasy Premier League managers use them to spot players before they score.',
+    h1: 'Expected goals (xG) explained',
+    lede: 'Goals are rare and luck plays a big part. Expected goals help you see which players keep getting good chances, even before the goals come.',
+    body: `
+<h2>What xG measures</h2>
+<p>Every shot is given a value between 0 and 1: the chance that a typical shot from that position and situation ends up as a goal. A penalty is worth far more than a long-range shot. Add up a player's shots and you get his <strong>expected goals</strong>, or xG.</p>
+<p><strong>Expected assists</strong> (xA) work the same way for the passes that lead to shots.</p>
+
+<h2>Why it helps in FPL</h2>
+<ul>
+  <li><strong>Spotting players before they haul:</strong> a forward with high xG but few goals is getting good chances. If he keeps getting them, the goals often follow.</li>
+  <li><strong>Avoiding false form:</strong> a player who scored three long-range screamers from very little xG may struggle to keep it up.</li>
+  <li><strong>Judging defences:</strong> teams that concede lots of expected goals are good opponents to target with your attackers.</li>
+</ul>
+
+<h2>What xG can't tell you</h2>
+<ul>
+  <li>It doesn't account for minutes. A player with good xG who gets subbed off early will still score fewer FPL points.</li>
+  <li>Small samples mislead. Three or four matches is a short window, so compare over several gameweeks.</li>
+  <li>Elite finishers can beat their xG for a long time, and poor finishers can stay below it.</li>
+</ul>
+
+<h2>Putting it together</h2>
+<p>Use xG alongside fixtures, minutes and set-piece duties, not on its own. A player with strong xG, guaranteed minutes and an easy run on our <a href="fixture-difficulty.html">fixture grid</a> is usually a better buy than one with a big recent haul from very few chances. Our <a href="captain-picks.html">captain picks</a> use FPL's own expected points, which already include this kind of underlying data.</p>`,
+  },
 ];

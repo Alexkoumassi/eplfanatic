@@ -202,3 +202,4 @@ select {
 .prose .tbl td, .prose .tbl th { padding-inline: 12px; }
 .updated { color: var(--muted); font-size: .88rem; margin-top: 28px; }
 .more-guides { margin-top: 36px; display: grid; gap: 14px; }
+.tool-about { margin-top: 32px; }

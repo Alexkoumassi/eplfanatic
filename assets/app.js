@@ -233,7 +233,8 @@
       renderBand(d);
       if (el && RENDER[page]) RENDER[page](el, d);
     }).catch(function () {
-      if (el) el.innerHTML = '<p class="error">The latest numbers didn\'t load. Refresh the page in a minute.</p>';
+      // Keep the snapshot built into the page; only show an error if there's nothing there.
+      if (el && el.querySelector('.loading')) el.innerHTML = '<p class="error">The latest numbers didn\'t load. Refresh the page in a minute.</p>';
     });
   }
 
