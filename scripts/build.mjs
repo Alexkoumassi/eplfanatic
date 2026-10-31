@@ -214,6 +214,33 @@ const TOOL_ABOUT = {
 
 const TOOL_PAGES = new Set(['prices', 'fixtures', 'captains', 'injuries', 'home']);
 
+// Homepage teaser lines, written into the HTML at build time so the page is not
+// four "Loading…" placeholders to anything that doesn't run scripts.
+function teaser(kind) {
+  const d = DATA;
+  if (!d) return 'Updated several times a day';
+  const runScore = t => t.cells.reduce((s, c) => s + c.reduce((a, o) => a + 6 - o.diff, 0), 0);
+  if (kind === 'prices') {
+    const r = d.prices.risers[0], f = d.prices.fallers[0];
+    if (!r) return 'Live transfer numbers for every player';
+    return `Biggest riser: <b>${esc(r.name)}</b> ${signed(r.net)}` +
+      (f ? `<br>Biggest faller: <b>${esc(f.name)}</b> ${signed(f.net)}` : '');
+  }
+  if (kind === 'fixtures') {
+    const best = d.fdr.teams.slice().sort((a, b) => runScore(b) - runScore(a))[0];
+    return best ? `Easiest run: <b>${esc(best.name)}</b>` : 'Every team\'s next six matches';
+  }
+  if (kind === 'captains') {
+    const c = d.captains[0];
+    return c ? `Top pick: <b>${esc(c.name)}</b> ${esc(c.team)} · score ${c.score.toFixed(1)}` : 'Ranked every gameweek';
+  }
+  if (kind === 'injuries') {
+    const fl = d.flags[0];
+    return fl ? `${d.flags.length} players flagged · most owned: <b>${esc(fl.name)}</b>` : 'Every flagged player';
+  }
+  return '';
+}
+
 function bandText() {
   if (!DATA || !DATA.gameweek) return '<span><b>FPL Tools</b> Updated several times a day</span>';
   const d = new Date(DATA.gameweek.deadline);
@@ -287,8 +314,11 @@ ${footer()}
 `;
 }
 
+const HOME_BODY = PAGES[0].body;
+
 async function buildSite() {
   try { DATA = JSON.parse(await readFile(path.join(ROOT, 'data', 'fpl.json'), 'utf8')); } catch { DATA = null; }
+  PAGES[0].body = HOME_BODY.replace(/id="teaser-([a-z]+)">Loading…/g, (m, k) => `id="teaser-${k}">${teaser(k)}`);
   for (const p of PAGES) await writeFile(path.join(ROOT, p.file), fullPage(p));
   const urls = PAGES.map(p => `  <url><loc>${SITE}/${p.file === 'index.html' ? '' : p.file}</loc></url>`).join('\n');
   await writeFile(path.join(ROOT, 'sitemap.xml'),
