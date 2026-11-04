@@ -21,7 +21,7 @@ const ADSENSE_ID = 'ca-pub-1063483534026275';
 // Fanatics runs through Impact (publisher 8083996). Classic Football Shirts runs
 // through Tapfiliate — paste its link in when they approve.
 const AFFILIATE = {
-  fanatics: 'https://fanatics.93n6tx.net/Jk6VoQ',
+  fanatics: 'https://fanatics.93n6tx.net/4a7mR1',
   classicFootballShirts: '',
 };
 const DISCLOSURE = 'Some links on this page are affiliate links. If you buy something through one, EPL Fanatic may earn a small commission at no extra cost to you. It never changes what we recommend or what the tools show.';
