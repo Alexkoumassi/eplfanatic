@@ -15,6 +15,18 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@60
 // Paste your AdSense publisher ID here once approved, e.g. 'ca-pub-1234567890123456'
 const ADSENSE_ID = 'ca-pub-1063483534026275';
 
+
+// ---- Affiliate programmes ----
+// Add a programme's link here once it is approved; set to '' to hide that block.
+// Fanatics runs through Impact (publisher 8083996). Classic Football Shirts runs
+// through Tapfiliate — paste its link in when they approve.
+const AFFILIATE = {
+  fanatics: 'https://fanatics.93n6tx.net/en0Eez',
+  classicFootballShirts: '',
+};
+const DISCLOSURE = 'Some links on this page are affiliate links. If you buy something through one, EPL Fanatic may earn a small commission at no extra cost to you. It never changes what we recommend or what the tools show.';
+const hasAffiliate = () => Object.values(AFFILIATE).some(Boolean);
+
 const NAV = [
   ['index.html', 'home', 'Home'],
   ['price-changes.html', 'prices', 'Price changes'],
@@ -22,6 +34,7 @@ const NAV = [
   ['captain-picks.html', 'captains', 'Captain picks'],
   ['injuries.html', 'injuries', 'Injuries'],
   ['guides.html', 'guides', 'Guides'],
+  ['shirts.html', 'shirts', 'Shirts'],
 ];
 
 const PAGES = [
@@ -126,6 +139,51 @@ for (const g of GUIDES) {
   `<li><a href="${o.file}"><span class="gl-title">${o.h1}</span></a></li>`).join('')}</ul></aside>`,
   });
 }
+
+// Shirts page — affiliate links live here, with the disclosure in plain sight.
+PAGES.push({
+  file: 'shirts.html', page: 'shirts',
+  title: 'Premier League Shirts: Where to Buy and What to Know | EPL Fanatic',
+  desc: 'Where to buy Premier League shirts, the difference between authentic and replica kits, how sizing works, and what name and number printing costs.',
+  eyebrow: 'Kit guide', h1: 'Premier League shirts',
+  lede: 'Everything worth knowing before you buy a shirt, and the two shops we send people to.',
+  body: `<div class="disclosure"><strong>Heads up:</strong> ${DISCLOSURE}</div>
+
+<section class="prose">
+<h2>Where to buy</h2>
+${AFFILIATE.fanatics ? `<div class="shop">
+  <h3>Fanatics</h3>
+  <p>The biggest selection by a distance. They run the official Premier League store and most individual club shops, so if you want this season's kit in your club's colours with official printing, this is the straightforward option. Prices sit at RRP most of the year, with real discounts once a kit is replaced.</p>
+  <p><a class="shop-link" href="${AFFILIATE.fanatics}" rel="sponsored nofollow noopener" target="_blank">Browse kits at Fanatics →</a></p>
+</div>` : ''}
+${AFFILIATE.classicFootballShirts ? `<div class="shop">
+  <h3>Classic Football Shirts</h3>
+  <p>Retro and hard-to-find shirts, plus current kits. If you're after a 90s shirt or something your club stopped selling years ago, this is the place. Stock is one-off, so sizes go quickly.</p>
+  <p><a class="shop-link" href="${AFFILIATE.classicFootballShirts}" rel="sponsored nofollow noopener" target="_blank">Browse Classic Football Shirts →</a></p>
+</div>` : ''}
+
+<h2>Authentic or replica?</h2>
+<p>Every club sells two versions of the same shirt, and the price gap is large.</p>
+<ul>
+  <li><strong>Replica</strong> is the one most fans buy. Looser cut, heavier fabric, same badge and sponsor. Comfortable to wear to the pub or the match.</li>
+  <li><strong>Authentic</strong> (sometimes called "player issue" or "match") is what the players actually wear. Tighter, lighter, more technical fabric, and usually a good deal more expensive.</li>
+</ul>
+<p>Unless you're playing in it, replica is the sensible buy. The authentic version mainly costs more for a cut that's less forgiving.</p>
+
+<h2>Getting the size right</h2>
+<p>Football shirts run smaller than normal t-shirts, and authentic versions run smaller again. If you're between sizes, or buying authentic, size up. Check the retailer's size guide rather than assuming your usual size carries over, since Nike, adidas, Puma and Castore all cut differently.</p>
+
+<h2>When new kits come out</h2>
+<p>Home kits usually land in late spring or early summer, before the season starts. Away and third kits follow through the summer and sometimes into autumn. If you want a kit cheap, the time to buy is when its replacement is announced — the outgoing shirt gets discounted hard.</p>
+
+<h2>Name and number printing</h2>
+<p>Official Premier League printing costs extra on top of the shirt, and it's usually non-refundable once applied. Worth thinking twice before putting a player's name on a shirt in January, when he might be at another club by February.</p>
+
+<h2>A note on what we link to</h2>
+<p>We only link to shops we'd point a mate at. If a retailer stops being worth recommending, the link comes off this page. The affiliate commission doesn't change what the <a href="fixture-difficulty.html">fixture grid</a>, <a href="captain-picks.html">captain picks</a> or any other tool shows — those come straight from the game's own data.</p>
+</section>`,
+});
+
 // Home page: add the guides list under the tools
 PAGES[0].body += `\n<section class="home-guides"><h2>Learn the game</h2>${guideList()}</section>`;
 
@@ -261,6 +319,7 @@ function footer() {
   return `<footer class="site-foot"><div class="wrap">
   <nav aria-label="Footer"><a href="about.html">About</a><a href="about.html#contact">Contact</a><a href="privacy.html">Privacy</a></nav>
   <p style="margin:0">EPL Fanatic is an independent fan site. Not affiliated with, endorsed by, or connected to the Premier League or Fantasy Premier League. Data comes from the public FPL game and updates every hour.</p>
+  ${hasAffiliate() ? `<p style="margin:0">${DISCLOSURE}</p>` : ''}
   <p style="margin:0">© ${new Date().getFullYear()} EPL Fanatic</p>
 </div></footer>`;
 }
