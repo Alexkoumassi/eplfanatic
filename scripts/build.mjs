@@ -21,7 +21,7 @@ const ADSENSE_ID = 'ca-pub-1063483534026275';
 // Fanatics runs through Impact (publisher 8083996). Classic Football Shirts runs
 // through Tapfiliate — paste its link in when they approve.
 const AFFILIATE = {
-  fanatics: 'https://fanatics.93n6tx.net/en0Eez',
+  fanatics: 'https://fanatics.93n6tx.net/Jk6VoQ',
   classicFootballShirts: '',
 };
 const DISCLOSURE = 'Some links on this page are affiliate links. If you buy something through one, EPL Fanatic may earn a small commission at no extra cost to you. It never changes what we recommend or what the tools show.';
@@ -153,7 +153,7 @@ PAGES.push({
 <h2>Where to buy</h2>
 ${AFFILIATE.fanatics ? `<div class="shop">
   <h3>Fanatics</h3>
-  <p>The biggest selection by a distance. They run the official Premier League store and most individual club shops, so if you want this season's kit in your club's colours with official printing, this is the straightforward option. Prices sit at RRP most of the year, with real discounts once a kit is replaced.</p>
+  <p>A big selection of Premier League club kits, home and away, with official printing available. This is a US-based store, so if you're ordering from outside North America, check the shipping cost and delivery time before you commit. Prices sit at RRP most of the year, with real discounts once a kit is replaced.</p>
   <p><a class="shop-link" href="${AFFILIATE.fanatics}" rel="sponsored nofollow noopener" target="_blank">Browse kits at Fanatics →</a></p>
 </div>` : ''}
 ${AFFILIATE.classicFootballShirts ? `<div class="shop">
